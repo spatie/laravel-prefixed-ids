@@ -1,3 +1,5 @@
+**WE'RE STILL BUILDING THIS PACKAGE, DO NOT USE IN PRODUCTION YET**
+
 # Friendly prefixed IDs for Laravel models
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-prefixed-ids.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-prefixed-ids)
@@ -5,7 +7,9 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-prefixed-ids/Check%20&%20fix%20styling?label=code%20style)](https://github.com/spatie/laravel-prefixed-ids/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-prefixed-ids.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-prefixed-ids)
 
-This package can generate friendly prefixed ids for Eloquent models. For example:
+Prefixing an id will help users to recognize what kind of id it is. Stripe does this by default. Customer ids are prefixed with `cus`, secret keys in production are prefixed with `sk_live_`, secret keys of a testing environment with `sk_test_` [and so on](https://gist.github.com/fnky/76f533366f75cf75802c8052b577e2a5).
+
+This package can generate such friendly prefixed ids for Eloquent models. Here's how such generated ids could look like.
 
 ```
 user_fj39fj3lsmxlsl
@@ -38,7 +42,7 @@ You can install the package via composer:
 composer require spatie/laravel-prefixed-ids
 ```
 
-You can publish the config file with:
+Optionally, You can publish the config file with:
 ```bash
 php artisan vendor:publish --provider="Spatie\PrefixedIds\PrefixedIdsServiceProvider" --tag="laravel-prefixed-ids-config"
 ```
@@ -54,9 +58,10 @@ return [
 ];
 ```
 
+
 ## Usage
 
-Coming soon
+COMING SOON
 
 ## Testing
 
