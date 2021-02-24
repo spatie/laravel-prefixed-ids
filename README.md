@@ -1,5 +1,3 @@
-**WE'RE STILL BUILDING THIS PACKAGE, DO NOT USE IN PRODUCTION YET**
-
 # Friendly prefixed IDs for Laravel models
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-prefixed-ids.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-prefixed-ids)
