@@ -11,7 +11,7 @@ class PrefixedIds
 
     public function registerModels(array $registerModels)
     {
-        foreach($registerModels as $prefix => $model) {
+        foreach ($registerModels as $prefix => $model) {
             self::registerModel($prefix, $model);
         }
     }
