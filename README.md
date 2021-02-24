@@ -64,7 +64,7 @@ If you wish to use another attribute name, you should publish the config file (s
 
 ```php
 Schema::create('your_models_table', function (Blueprint $table) {
-   $table->string('prefixed_id');
+   $table->string('prefixed_id')->index();
 });
 ```
 
