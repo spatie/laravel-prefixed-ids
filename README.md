@@ -5,8 +5,22 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-prefixed-ids/Check%20&%20fix%20styling?label=code%20style)](https://github.com/spatie/laravel-prefixed-ids/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-prefixed-ids.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-prefixed-ids)
 
+This package can generate friendly prefixed ids for Eloquent models. For example:
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+```
+user_fj39fj3lsmxlsl
+test_token_dvklms109dls
+```
+
+The package can retrieve the model for a given prefixed id.
+
+```php
+// on a specific model
+User::findByPrefixedId('user_fj39fj3lsmxlsl'); // returns a User model or `null`
+
+// automatically determine the model of a given prefixed id
+$user = PrefixedIds::getModel('user_fj39fj3lsmxlsl') // returns the right model for the id or `null`;
+```
 
 ## Support us
 
@@ -24,13 +38,6 @@ You can install the package via composer:
 composer require spatie/laravel-prefixed-ids
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --provider="Spatie\PrefixedIds\PrefixedIdsServiceProvider" --tag="laravel-prefixed-ids-migrations"
-php artisan migrate
-```
-
 You can publish the config file with:
 ```bash
 php artisan vendor:publish --provider="Spatie\PrefixedIds\PrefixedIdsServiceProvider" --tag="laravel-prefixed-ids-config"
@@ -40,15 +47,16 @@ This is the contents of the published config file:
 
 ```php
 return [
+    /*
+     * The delimiter used for glue the prefixed part with the unique part of an id
+     */
+    'glue' => '_',
 ];
 ```
 
 ## Usage
 
-```php
-$laravel-prefixed-ids = new Spatie\PrefixedIds();
-echo $laravel-prefixed-ids->echoPhrase('Hello, Spatie!');
-```
+Coming soon
 
 ## Testing
 
@@ -70,8 +78,10 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Freek Van der Herten](https://github.com/Freek Van der Herten)
+- [Freek Van der Herten](https://github.com/freekmurze)
 - [All Contributors](../../contributors)
+
+This package is inspired by [excid3/prefixed_ids](https://github.com/excid3/prefixed_ids)
 
 ## License
 
