@@ -34,7 +34,7 @@
     "autoload-dev": {
         "psr-4": {
             "Spatie\\PrefixedIds\\Tests\\": "tests",
-            "Spatie\\PrefixedIds\\Tests\\Database\\Migrations": "tests/database/migrations"
+            "Spatie\\PrefixedIds\\Tests\\Database\\Migrations\\": "tests/database/migrations"
 
         }
     },
