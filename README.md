@@ -58,7 +58,7 @@ class YourModel extends Model
 
 ### Preparing the database
 
-For each model that needs a prefixed id, you'll need to write a migration to add a `prefixed_id` column to it's underlying table.
+For each model that needs a prefixed id, you'll need to write a migration to add a `prefixed_id` column to its underlying table.
 
 If you wish to use another attribute name, you should publish the config file (see below) and set the `prefixed_id_attribute_name` config value to the attribute name of your liking.
 

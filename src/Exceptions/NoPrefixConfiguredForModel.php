@@ -14,13 +14,13 @@ class NoPrefixConfiguredForModel extends Exception implements ProvidesSolution
     {
         $modelClass = $model::class;
 
-        return new static("Could not generated a prefixed id for model `{$modelClass}`");
+        return new static("Could not generate a prefixed id for model `{$modelClass}`");
     }
 
     public function getSolution(): Solution
     {
         return BaseSolution::create('Register the prefix of the model')
-            ->setSolutionDescription("You should register the model `Spatie\PrefixedIds\PrefixedIds::registerModel() in a service provider")
+            ->setSolutionDescription("You should register your model using `Spatie\PrefixedIds\PrefixedIds::registerModel() in a service provider")
             ->setDocumentationLinks([
                 'Documentation' => 'https://github.com/spatie/laravel-prefixed-ids#registering-models-with-prefixed-ids',
             ]);
