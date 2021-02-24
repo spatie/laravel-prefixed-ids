@@ -2,7 +2,7 @@
 
 return [
     /*
-     * The delimiter used for glue the prefixed part with the unique part of an id
+     * The attribute name used to store prefixed ids on a model
      */
-    'glue' => '_',
+    'prefixed_id_attribute_name' => 'prefixed_id',
 ];

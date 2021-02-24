@@ -4,7 +4,11 @@ namespace Spatie\PrefixedIds\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\PrefixedIds\PrefixedIds;
 use Spatie\PrefixedIds\PrefixedIdsServiceProvider;
+use Spatie\PrefixedIds\Tests\Database\Migrations\CreateOtherTestModelsTable;
+use Spatie\PrefixedIds\Tests\Database\Migrations\CreateTestModelsTable;
+use Spatie\Skeleton\SkeletonServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -12,16 +16,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Spatie\\PrefixedIds\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
-    }
-
-    protected function getPackageProviders($app)
-    {
-        return [
-            PrefixedIdsServiceProvider::class,
-        ];
+        ray()->newScreen($this->getName());
     }
 
     public function getEnvironmentSetUp($app)
@@ -33,9 +28,14 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-        /*
-        include_once __DIR__.'/../database/migrations/create_laravel_prefixed_ids_table.php.stub';
-        (new \CreatePackageTable())->up();
-        */
+        (new CreateTestModelsTable())->up();
+        (new CreateOtherTestModelsTable())->up();
+    }
+
+    protected function getPackageProviders($app)
+    {
+        return [
+            PrefixedIdsServiceProvider::class,
+        ];
     }
 }

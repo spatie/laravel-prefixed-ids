@@ -9,16 +9,27 @@ use Spatie\PrefixedIds\PrefixedIds;
 
 trait HasPrefixedId
 {
-    public function HasPrefixedIdBooted()
+    public static function bootHasPrefixedId()
     {
-        static::creating(function (Model  $model) {
-            $model->prefixed_id = $this->generatePrefixedId();
+        static::creating(function (Model $model) {
+            $attributeName = config('prefixed-ids.prefixed_id_attribute_name');
+
+            $model->{$attributeName} = $model->generatePrefixedId();
         });
     }
 
-    public function findByPrefixedId(string $prefixedId): ?Model
+    public function getPrefixedIdAttribute(): ?string
     {
-        return static::firstWhere('prefixed_id', $prefixedId);
+        $attributeName = config('prefixed-ids.prefixed_id_attribute_name');
+
+        return $this->attributes[$attributeName] ?? null;
+    }
+
+    public static function findByPrefixedId(string $prefixedId): ?Model
+    {
+        $attributeName = config('prefixed-ids.prefixed_id_attribute_name');
+
+        return static::firstWhere($attributeName, $prefixedId);
     }
 
     protected function getIdPrefix(): string
@@ -34,9 +45,7 @@ trait HasPrefixedId
 
     protected function generatePrefixedId(): string
     {
-        $glue = config('prefixed-ids.glue');
-
-        return "{$this->getIdPrefix()}{$glue}}{$this->getIdPrefix()}";
+        return "{$this->getIdPrefix()}{$this->getUniquePartForPrefixId()}";
     }
 
     protected function getUniquePartForPrefixId(): string

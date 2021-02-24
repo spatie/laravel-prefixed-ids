@@ -9,19 +9,19 @@ class PrefixedIds
 {
     public static array $registeredModels = [];
 
-    public function registerModels(array $registerModels)
+    public static function registerModels(array $registerModels): void
     {
         foreach ($registerModels as $prefix => $model) {
             self::registerModel($prefix, $model);
         }
     }
 
-    public static function registerModel(string $prefix, string $modelClass)
+    public static function registerModel(string $prefix, string $modelClass): void
     {
         static::$registeredModels[$prefix] = $modelClass;
     }
 
-    public static function clearRegisteredModels()
+    public static function clearRegisteredModels(): void
     {
         static::$registeredModels = [];
     }
@@ -33,7 +33,7 @@ class PrefixedIds
         return $keyedByModelClass[$modelClass] ?? null;
     }
 
-    public static function getModel(string $prefixedId): ?Model
+    public static function find(string $prefixedId): ?Model
     {
         if (! $modelClass = static::getModelClass($prefixedId)) {
             return null;
@@ -44,12 +44,11 @@ class PrefixedIds
 
     public static function getModelClass(string $prefixedId): ?string
     {
-        if (! str_contains($prefixedId, config('prefixed-ids.glue'))) {
-            return null;
-        }
+        foreach(static::$registeredModels as $prefix => $modelClass)
+            if (str_starts_with($prefixedId, $prefix)) {
+                return $modelClass;
+            }
 
-        $prefix = Str::before($prefixedId, config('prefixed-ids.glue'));
-
-        return static::$registeredModels[$prefix] ?? null;
+        return null;
     }
 }

@@ -12,7 +12,9 @@ class NoPrefixConfiguredForModel extends Exception implements ProvidesSolution
 {
     public static function make(Model $model)
     {
-        return new Exception("Could not generated a prefixed id for model `{$model::class}`");
+        $modelClass = $model::class;
+
+        return new static("Could not generated a prefixed id for model `{$modelClass}`");
     }
 
     public function getSolution(): Solution
