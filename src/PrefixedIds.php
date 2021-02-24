@@ -3,7 +3,6 @@
 namespace Spatie\PrefixedIds;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class PrefixedIds
 {
@@ -44,10 +43,11 @@ class PrefixedIds
 
     public static function getModelClass(string $prefixedId): ?string
     {
-        foreach(static::$registeredModels as $prefix => $modelClass)
+        foreach (static::$registeredModels as $prefix => $modelClass) {
             if (str_starts_with($prefixedId, $prefix)) {
                 return $modelClass;
             }
+        }
 
         return null;
     }
