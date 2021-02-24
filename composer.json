@@ -28,8 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\PrefixedIds\\": "src",
-            "Spatie\\PrefixedIds\\Database\\Factories\\": "database/factories"
+            "Spatie\\PrefixedIds\\": "src"
         }
     },
     "autoload-dev": {
@@ -38,22 +37,11 @@
         }
     },
     "scripts": {
-        "psalm": "vendor/bin/psalm",
         "test": "vendor/bin/phpunit --colors=always",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },
     "config": {
         "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Spatie\\PrefixedIds\\PrefixedIdsServiceProvider"
-            ],
-            "aliases": {
-                "PrefixedIds": "Spatie\\PrefixedIds\\PrefixedIdsFacade"
-            }
-        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true
