@@ -22,7 +22,7 @@ class NoPrefixConfiguredForModel extends Exception implements ProvidesSolution
         return BaseSolution::create('Register the prefix of the model')
             ->setSolutionDescription("You should register the model `Spatie\PrefixedIds\PrefixedIds::registerModel() in a service provider")
             ->setDocumentationLinks([
-                'Documentation' => 'https://github.com/spatie/laravel-prefixed-ids',
+                'Documentation' => 'https://github.com/spatie/laravel-prefixed-ids#registering-models-with-prefixed-ids',
             ]);
     }
 }
