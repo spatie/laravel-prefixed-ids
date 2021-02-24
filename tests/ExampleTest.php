@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Spatie\PrefixedIds\Tests;
 
 class ExampleTest extends TestCase
 {

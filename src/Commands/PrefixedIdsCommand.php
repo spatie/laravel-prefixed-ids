@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\Skeleton\Commands;
+namespace Spatie\PrefixedIds\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class PrefixedIdsCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-prefixed-ids';
 
     public $description = 'My command';
 
