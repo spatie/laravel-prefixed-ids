@@ -126,6 +126,27 @@ $yourModel = Spatie\PrefixedIds\PrefixedIds::find('your_model_fekjlmsme39dmMS');
 $otherModel = Spatie\PrefixedIds\PrefixedIds::find('other_model_3Fjmmfsmls'); // returns an instance of `OtherModel` or `null`
 ```
 
+## Using the prefixed ids in your routes
+
+To use the prefixed ids in your routes, you'll have to add the `getRouteKeyName` method to your model. It should return the name of the attribute that holds the prefixed id.
+
+```php
+public function getRouteKeyName()
+{
+    return 'prefixed_id';
+}
+```
+
+With this in place a route defined as...
+
+```php
+Route::get('your-model/{yourModel}', YourModelController::class)`
+```
+
+... can be invoked with an URL like "/your-model/your_model_fekjlmsme39dmMS".
+
+You'll find more info on route model binding in [the Laravel docs](https://laravel.com/docs/master/routing#route-model-binding).
+
 ## Testing
 
 ```bash
