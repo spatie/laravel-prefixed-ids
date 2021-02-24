@@ -64,7 +64,7 @@ If you wish to use another attribute name, you should publish the config file (s
 
 ```php
 Schema::create('your_models_table', function (Blueprint $table) {
-   $table->string('prefixed_id');
+   $table->string('prefixed_id')->index();
 });
 ```
 
@@ -105,7 +105,7 @@ When a model is created, it will automatically have a unique, prefixed id in the
 
 ```php
 $model = YourModel::create();
-$model->prefixed_id // return a random id like `your_model_fekjlmsme39dmMS`
+$model->prefixed_id // returns a random id like `your_model_fekjlmsme39dmMS`
 ```
 
 ### Finding a specific model
@@ -114,7 +114,7 @@ You can find the model with a given prefix by calling `findByPrefixedId` on it.
 
 ```php
 YourModel::findByPrefixedId('your_model_fekjlmsme39dmMS'); // returns an instance of `YourModel`
-YourModel::findByPrefixedId('non-existing-id'); // return null
+YourModel::findByPrefixedId('non-existing-id'); // returns null
 ```
 
 ### Finding across models
