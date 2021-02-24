@@ -7,7 +7,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/spatie/laravel-prefixed-ids/Check%20&%20fix%20styling?label=code%20style)](https://github.com/spatie/laravel-prefixed-ids/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-prefixed-ids.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-prefixed-ids)
 
-Prefixing an id will help users to recognize what kind of id it is. Stripe does this by default. Customer ids are prefixed with `cus`, secret keys in production are prefixed with `sk_live_`, secret keys of a testing environment with `sk_test_` [and so on](https://gist.github.com/fnky/76f533366f75cf75802c8052b577e2a5).
+Prefixing an id will help users to recognize what kind of id it is. Stripe does this by default: customer ids are prefixed with `cus`, secret keys in production are prefixed with `sk_live_`, secret keys of a testing environment with `sk_test_` [and so on...](https://gist.github.com/fnky/76f533366f75cf75802c8052b577e2a5).
 
 This package can generate such friendly prefixed ids for Eloquent models. Here's how such generated ids could look like.
 
