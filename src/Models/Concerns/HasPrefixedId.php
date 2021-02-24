@@ -16,7 +16,8 @@ trait HasPrefixedId
         });
     }
 
-    public function findByPrefixedId(string $prefixedId): ?Model {
+    public function findByPrefixedId(string $prefixedId): ?Model
+    {
         return static::firstWhere('prefixed_id', $prefixedId);
     }
 
