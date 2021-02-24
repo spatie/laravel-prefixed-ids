@@ -42,6 +42,49 @@ You can install the package via composer:
 composer require spatie/laravel-prefixed-ids
 ```
 
+### Preparing your models
+
+On each model that needs a prefixed id, you should use the `Spatie\PrefixedIds\Models\Concerns\HasPrefixedId` trait.
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
+
+class YourModel extends Model
+{
+    use HasPrefixedId;
+}
+```
+
+### Preparing the database
+
+For each model that needs a prefixed id, you'll need to write a migration to add a `prefixed_id` column to it's underlying table.
+
+If you wish to use another attribute name, you should publish the config file (see below) and set the `prefixed_id_attribute_name` config value to the attribute name of your liking.
+
+```php
+Schema::create('your_models_table', function (Blueprint $table) {
+   $table->string('prefixed_id');
+});
+```
+
+### Registering models with prefixed ids
+
+To register your models, you should pass the desired prefix and the class name of your model to `PrefixedIds::registerModels`.
+
+```php
+Spatie\PrefixedIds\PrefixedIds::registerModels([
+    'your_prefix_' => YourModel::class,
+    'another_prefix' => AnotherModel::class,
+]);
+```
+
+Typically, you would put the code above in a service provider.
+
+### Publish the config file
+
 Optionally, You can publish the config file with:
 ```bash
 php artisan vendor:publish --provider="Spatie\PrefixedIds\PrefixedIdsServiceProvider" --tag="laravel-prefixed-ids-config"
@@ -52,16 +95,39 @@ This is the contents of the published config file:
 ```php
 return [
     /*
-     * The delimiter used for glue the prefixed part with the unique part of an id
+     * The attribute name used to store prefixed ids on a model
      */
-    'glue' => '_',
+    'prefixed_id_attribute_name' => 'prefixed_id',
 ];
 ```
 
 
 ## Usage
 
-COMING SOON
+When a model is created, it will automatically have a unique, prefixed id in the `prefixed_id` attribute.
+
+```php
+$model = YourModel::create();
+$model->prefixed_id // return a random id like `your_model_fekjlmsme39dmMS`
+```
+
+### Finding a specific model
+
+You can find the model with a given prefix by calling `findByPrefixedId` on it.
+
+```php
+YourModel::findByPrefixedId('your_model_fekjlmsme39dmMS'); // returns an instance of `YourModel`
+YourModel::findByPrefixedId('non-existing-id'); // return null
+```
+
+### Finding across models
+
+You can call `find` on `Spatie\PrefixedIds\PrefixedIds` to automatically get the right model for any given prefixed id.
+
+```php
+$yourModel = Spatie\PrefixedIds\PrefixedIds::find('your_model_fekjlmsme39dmMS'); // returns an instance of `YourModel` or `null`
+$otherModel = Spatie\PrefixedIds\PrefixedIds::find('other_model_3Fjmmfsmls'); // returns an instance of `OtherModel` or `null`
+```
 
 ## Testing
 
