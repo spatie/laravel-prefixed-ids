@@ -140,10 +140,10 @@ public function getRouteKeyName()
 With this in place a route defined as...
 
 ```php
-Route::get('your-model/{yourModel}', YourModelController::class)`
+Route::get('/api/your-model/{yourModel}', YourModelController::class)`
 ```
 
-... can be invoked with an URL like `/your-model/your_model_fekjlmsme39dmMS`.
+... can be invoked with an URL like `/api/your-model/your_model_fekjlmsme39dmMS`.
 
 You'll find more info on route model binding in [the Laravel docs](https://laravel.com/docs/master/routing#route-model-binding).
 
