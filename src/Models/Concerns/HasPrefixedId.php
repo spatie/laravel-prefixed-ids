@@ -18,6 +18,11 @@ trait HasPrefixedId
         });
     }
 
+    public function getIncrementing()
+    {
+        return config('prefixed-ids.prefixed_id_is_primary');
+    }
+
     public function getPrefixedIdAttribute(): ?string
     {
         $attributeName = config('prefixed-ids.prefixed_id_attribute_name');
@@ -50,6 +55,9 @@ trait HasPrefixedId
 
     protected function getUniquePartForPrefixId(): string
     {
+        if (config('prefixed-ids.should_use_ordered_uuid')) {
+            return str_replace('-', '', Str::orderedUuid());
+        }
         return str_replace('-', '', Str::uuid());
     }
 }

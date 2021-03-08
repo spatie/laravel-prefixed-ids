@@ -83,7 +83,7 @@ Typically, you would put the code above in a service provider.
 
 ### Publish the config file
 
-Optionally, You can publish the config file with:
+Optionally, you can publish the config file with:
 ```bash
 php artisan vendor:publish --provider="Spatie\PrefixedIds\PrefixedIdsServiceProvider" --tag="laravel-prefixed-ids-config"
 ```
@@ -96,7 +96,37 @@ return [
      * The attribute name used to store prefixed ids on a model
      */
     'prefixed_id_attribute_name' => 'prefixed_id',
+
+    /*
+     * By default UUID's will be used. Setting this to true will use ordered UUID's instead.
+     */
+    'should_use_ordered_uuid' => false,
+
+    /*
+     * Using prefixed ids as primary id?
+     * If set to true, set 'prefixed_ids_attribute_name' to 'id'
+     * Setting this to true sets $incrementing to false by default.
+     * You can publish stubs 'php artisan prefixedids:stubs' to automatically update migrations/model creation
+     */
+    'prefixed_id_is_primary' => false,
 ];
+```
+
+### Publish the stubs
+
+Optionally, you can publish new stubs with:
+```bash
+php artisan prefixedids:stubs
+```
+This is especially useful when you're using Prefixed Id's as your main ID.
+
+The DB migration stub will assume you're using 'id' instead of 'prefixed_id'.
+
+### Uuid's or orderedUuid;s
+
+Optionally, you can use orderedUuid's instead of Uuid's, by publishing the config file and setting `should_use_ordered_uuid` to `true`.
+```php
+'should_use_ordered_uuid' => false,
 ```
 
 ## Usage

@@ -1,18 +1,23 @@
 {
-    "name": "spatie/laravel-prefixed-ids",
+    "name": "woutertoday/laravel-prefixed-ids",
     "description": "Friendly prefixed IDs for Laravel models",
     "keywords": [
         "spatie",
         "laravel-prefixed-ids"
     ],
-    "homepage": "https://github.com/spatie/laravel-prefixed-ids",
+    "homepage": "https://github.com/woutertoday/laravel-prefixed-ids",
     "license": "MIT",
     "authors": [
         {
             "name": "Freek Van der Herten",
             "email": "freek@spatie.be",
             "role": "Developer"
-        }
+        },
+        {
+            "name": "Wouter Dijkstra",
+            "email": "wouter@dijkstra.email",
+            "role": "Developer"
+        },
     ],
     "require": {
         "php": "^8.0",
