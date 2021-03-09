@@ -96,8 +96,34 @@ return [
      * The attribute name used to store prefixed ids on a model
      */
     'prefixed_id_attribute_name' => 'prefixed_id',
+
+    /*
+     * Using prefixed id's as primary id?
+     * If set to true, it's suggested to set 'prefixed_ids_attribute_name' to 'id'.
+     * Setting this to true sets Model's $incrementing to false by default.
+     */
+    'prefixed_id_is_primary' => false,
 ];
 ```
+
+When setting `prefixed_id_is_primary` to `true` it is suggested to also publish the custom stubs.
+
+```bash
+php artisan prefixedids:stubs
+```
+
+These stubs add the `Spatie\PrefixedIds\Models\Concerns\HasPrefixedId` trait to your models by default.
+
+They'll also adapt your migrations to include the following:
+
+```php
+Schema::create('your_models_table', function (Blueprint $table) {
+   $table->string('id')->primary();
+   $table->timestamps();
+});
+```
+
+Obviously, you can modify these stubs further.
 
 ## Usage
 

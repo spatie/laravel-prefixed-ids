@@ -1,0 +1,13 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+use Spatie\PrefixedIds\Models\Concerns\HasPrefixedId;
+
+class {{ class }} extends Model
+{
+    use HasFactory, HasPrefixedId;
+}
