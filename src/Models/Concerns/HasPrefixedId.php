@@ -50,6 +50,6 @@ trait HasPrefixedId
 
     protected function getUniquePartForPrefixId(): string
     {
-        return str_replace('-', '', Str::uuid());
+        return config('prefixed-ids.use_ordered_uuids') === true ? str_replace('-', '', Str::orderedUuid()) : str_replace('-', '', Str::uuid());
     }
 }
