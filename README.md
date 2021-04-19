@@ -85,7 +85,7 @@ Typically, you would put the code above in a service provider.
 
 Optionally, You can publish the config file with:
 ```bash
-php artisan vendor:publish --provider="Spatie\PrefixedIds\PrefixedIdsServiceProvider" --tag="laravel-prefixed-ids-config"
+php artisan vendor:publish --provider="Spatie\PrefixedIds\PrefixedIdsServiceProvider" --tag="prefixed-ids-config"
 ```
 
 This is the contents of the published config file:
