@@ -22,7 +22,7 @@ User::findByPrefixedId('user_fj39fj3lsmxlsl'); // returns a User model or `null`
 User::findByPrefixedIdOrFail('user_fj39fj3lsmxlsl'); // returns a User model or throws `NoPrefixedModelFound`
 
 // automatically determine the model of a given prefixed id
-$user = PrefixedIds::getModel('user_fj39fj3lsmxlsl') // returns the right model for the id or `null`;
+$user = PrefixedIds::getModelClass('user_fj39fj3lsmxlsl') // returns the right model for the id or `null`;
 ```
 
 ## Support us
