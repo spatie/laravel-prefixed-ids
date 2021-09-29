@@ -98,7 +98,7 @@ class PrefixedIdsTest extends TestCase
     }
 
     // /** @test */
-    public function it_can_find_the_right_model_for_the_given_prefixed_id_or_fail()
+    public function it_can_find_or_fail_the_right_model_for_the_given_prefixed_id()
     {
         $testModel = TestModel::create();
         $otherTestModel = OtherTestModel::create();
@@ -110,8 +110,13 @@ class PrefixedIdsTest extends TestCase
         $otherFoundModel = PrefixedIds::findOrFail($otherTestModel->prefixed_id);
         $this->assertInstanceOf(OtherTestModel::class, $otherFoundModel);
         $this->assertEquals($testModel->id, $otherFoundModel->id);
+    }
 
-        $nonExistingModel = PrefixedIds::findOrFail('non-existing-id');
+    // /** @test */
+    public function it_throws_exception_on_invalid_given_model_prefixed_id()
+    {
         $this->expectException(NoPrefixedModelFound::class);
+
+        PrefixedIds::findOrFail('non-existing-id');
     }
 }
