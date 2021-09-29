@@ -127,6 +127,7 @@ You can call `find` on `Spatie\PrefixedIds\PrefixedIds` to automatically get the
 ```php
 $yourModel = Spatie\PrefixedIds\PrefixedIds::find('your_model_fekjlmsme39dmMS'); // returns an instance of `YourModel` or `null`
 $otherModel = Spatie\PrefixedIds\PrefixedIds::find('other_model_3Fjmmfsmls'); // returns an instance of `OtherModel` or `null`
+$otherModel = Spatie\PrefixedIds\PrefixedIds::findOrFail('other_model_3Fjmmfsmls'); // returns an instance of `OtherModel` or throws `NoPrefixedModelFound`
 ```
 
 ## Using the prefixed ids in your routes
