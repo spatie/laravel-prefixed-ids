@@ -32,6 +32,13 @@ trait HasPrefixedId
         return static::firstWhere($attributeName, $prefixedId);
     }
 
+    public static function findByPrefixedIdOrFail(string $prefixedId): Model
+    {
+        $attributeName = config('prefixed-ids.prefixed_id_attribute_name');
+
+        return static::where($attributeName, $prefixedId)->firstOrFail();
+    }
+
     protected function getIdPrefix(): string
     {
         $prefix = PrefixedIds::getPrefixForModel(static::class);

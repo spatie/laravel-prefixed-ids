@@ -3,6 +3,7 @@
 namespace Spatie\PrefixedIds;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\PrefixedIds\Exceptions\NoPrefixConfiguredForModel;
 
 class PrefixedIds
 {
@@ -39,6 +40,15 @@ class PrefixedIds
         }
 
         return $modelClass::findByPrefixedId($prefixedId);
+    }
+
+    public static function findOrFail(string $prefixedId): ?Model
+    {
+        if (! $modelClass = static::getModelClass($prefixedId)) {
+            throw NoPrefixConfiguredForModel::make($prefixedId);
+        }
+
+        return $modelClass::findByPrefixedIdOrFail($prefixedId);
     }
 
     public static function getModelClass(string $prefixedId): ?string

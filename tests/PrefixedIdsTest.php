@@ -78,4 +78,35 @@ class PrefixedIdsTest extends TestCase
         $nonExistingModel = PrefixedIds::find('non-existing-id');
         $this->assertNull($nonExistingModel);
     }
+
+    /** @test */
+    public function a_model_can_find_a_record_with_the_given_prefixed_id_or_fail()
+    {
+        $testModel = TestModel::create();
+
+        $foundModel = TestModel::findByPrefixedIdOrFail($testModel->prefixed_id);
+
+        $this->assertEquals($testModel->id, $foundModel->id);
+
+        $foundModel = TestModel::findByPrefixedIdOrFail('non_existing');
+        $this->expectException(NoPrefixConfiguredForModel::class);
+    }
+
+    /** @test */
+    public function it_can_find_the_right_model_for_the_given_prefixed_id_or_fail()
+    {
+        $testModel = TestModel::create();
+        $otherTestModel = OtherTestModel::create();
+
+        $foundModel = PrefixedIds::findOrFail($testModel->prefixed_id);
+        $this->assertInstanceOf(TestModel::class, $foundModel);
+        $this->assertEquals($testModel->id, $foundModel->id);
+
+        $otherFoundModel = PrefixedIds::findOrFail($otherTestModel->prefixed_id);
+        $this->assertInstanceOf(OtherTestModel::class, $otherFoundModel);
+        $this->assertEquals($testModel->id, $otherFoundModel->id);
+
+        $nonExistingModel = PrefixedIds::findOrFail('non-existing-id');
+        $this->expectException(NoPrefixConfiguredForModel::class);
+    }
 }
