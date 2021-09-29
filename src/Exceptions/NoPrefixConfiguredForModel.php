@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class NoPrefixConfiguredForModel extends Exception implements ProvidesSolution
 {
-    public static function make(Model | string $model)
+    public static function make(Model $model)
     {
-        $modelClass = is_string($model) ? $model : $model::class;
+        $modelClass = $model::class;
 
         return new static("Could not generate a prefixed id for model `{$modelClass}`");
     }
