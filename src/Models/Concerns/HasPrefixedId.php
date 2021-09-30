@@ -35,11 +35,11 @@ trait HasPrefixedId
 
     public static function findByPrefixedIdOrFail(string $prefixedId): Model
     {
-        if (! is_null($model = static::findByPrefixedId($prefixedId))) {
-            return $model;
+        if (is_null($model = static::findByPrefixedId($prefixedId))) {
+            throw NoPrefixedModelFound::make($prefixedId);
         }
 
-        throw NoPrefixedModelFound::make($prefixedId);
+        return $model;
     }
 
     protected function getIdPrefix(): string
