@@ -5,6 +5,7 @@ namespace Spatie\PrefixedIds\Models\Concerns;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Spatie\PrefixedIds\Exceptions\NoPrefixConfiguredForModel;
+use Spatie\PrefixedIds\Exceptions\NoPrefixedModelFound;
 use Spatie\PrefixedIds\PrefixedIds;
 
 trait HasPrefixedId
@@ -30,6 +31,15 @@ trait HasPrefixedId
         $attributeName = config('prefixed-ids.prefixed_id_attribute_name');
 
         return static::firstWhere($attributeName, $prefixedId);
+    }
+
+    public static function findByPrefixedIdOrFail(string $prefixedId): Model
+    {
+        if (is_null($model = static::findByPrefixedId($prefixedId))) {
+            throw NoPrefixedModelFound::make($prefixedId);
+        }
+
+        return $model;
     }
 
     protected function getIdPrefix(): string

@@ -19,9 +19,10 @@ The package can retrieve the model for a given prefixed id.
 ```php
 // on a specific model
 User::findByPrefixedId('user_fj39fj3lsmxlsl'); // returns a User model or `null`
+User::findByPrefixedIdOrFail('user_fj39fj3lsmxlsl'); // returns a User model or throws `NoPrefixedModelFound`
 
 // automatically determine the model of a given prefixed id
-$user = PrefixedIds::getModel('user_fj39fj3lsmxlsl') // returns the right model for the id or `null`;
+$user = PrefixedIds::getModelClass('user_fj39fj3lsmxlsl') // returns the right model for the id or `null`;
 ```
 
 ## Support us
@@ -84,6 +85,7 @@ Typically, you would put the code above in a service provider.
 ### Publish the config file
 
 Optionally, You can publish the config file with:
+
 ```bash
 php artisan vendor:publish --provider="Spatie\PrefixedIds\PrefixedIdsServiceProvider" --tag="prefixed-ids-config"
 ```
@@ -115,6 +117,7 @@ You can find the model with a given prefix by calling `findByPrefixedId` on it.
 ```php
 YourModel::findByPrefixedId('your_model_fekjlmsme39dmMS'); // returns an instance of `YourModel`
 YourModel::findByPrefixedId('non-existing-id'); // returns null
+YourModel::findByPrefixedIdOrFail('non-existing-id'); // throws `NoPrefixedModelFound`
 ```
 
 ### Finding across models
@@ -124,6 +127,7 @@ You can call `find` on `Spatie\PrefixedIds\PrefixedIds` to automatically get the
 ```php
 $yourModel = Spatie\PrefixedIds\PrefixedIds::find('your_model_fekjlmsme39dmMS'); // returns an instance of `YourModel` or `null`
 $otherModel = Spatie\PrefixedIds\PrefixedIds::find('other_model_3Fjmmfsmls'); // returns an instance of `OtherModel` or `null`
+$otherModel = Spatie\PrefixedIds\PrefixedIds::findOrFail('other_model_3Fjmmfsmls'); // returns an instance of `OtherModel` or throws `NoPrefixedModelFound`
 ```
 
 ## Using the prefixed ids in your routes

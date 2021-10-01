@@ -3,6 +3,7 @@
 namespace Spatie\PrefixedIds\Tests;
 
 use Spatie\PrefixedIds\Exceptions\NoPrefixConfiguredForModel;
+use Spatie\PrefixedIds\Exceptions\NoPrefixedModelFound;
 use Spatie\PrefixedIds\PrefixedIds;
 use Spatie\PrefixedIds\Tests\TestClasses\Models\OtherTestModel;
 use Spatie\PrefixedIds\Tests\TestClasses\Models\TestModel;
@@ -77,5 +78,45 @@ class PrefixedIdsTest extends TestCase
 
         $nonExistingModel = PrefixedIds::find('non-existing-id');
         $this->assertNull($nonExistingModel);
+    }
+
+    /** @test */
+    public function a_model_can_find_or_fail_a_record_with_the_given_prefixed_id()
+    {
+        $testModel = TestModel::create();
+
+        $foundModel = TestModel::findByPrefixedIdOrFail($testModel->prefixed_id);
+        $this->assertEquals($testModel->id, $foundModel->id);
+    }
+
+    /** @test */
+    public function it_throws_exception_on_invalid_prefixed_id()
+    {
+        $this->expectException(NoPrefixedModelFound::class);
+
+        TestModel::findByPrefixedIdOrFail('non_existing');
+    }
+
+    // /** @test */
+    public function it_can_find_or_fail_the_right_model_for_the_given_prefixed_id()
+    {
+        $testModel = TestModel::create();
+        $otherTestModel = OtherTestModel::create();
+
+        $foundModel = PrefixedIds::findOrFail($testModel->prefixed_id);
+        $this->assertInstanceOf(TestModel::class, $foundModel);
+        $this->assertEquals($testModel->id, $foundModel->id);
+
+        $otherFoundModel = PrefixedIds::findOrFail($otherTestModel->prefixed_id);
+        $this->assertInstanceOf(OtherTestModel::class, $otherFoundModel);
+        $this->assertEquals($testModel->id, $otherFoundModel->id);
+    }
+
+    // /** @test */
+    public function it_throws_exception_on_invalid_given_model_prefixed_id()
+    {
+        $this->expectException(NoPrefixedModelFound::class);
+
+        PrefixedIds::findOrFail('non-existing-id');
     }
 }
