@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "orchestra/testbench": "^6.23",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^9.4",
         "spatie/laravel-ray": "^1.9",
         "vimeo/psalm": "^4.4"
     },
