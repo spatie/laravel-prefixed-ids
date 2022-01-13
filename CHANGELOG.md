@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-prefixed-ids` will be documented in this file.
 
+## 1.2.0 - 2022-01-13
+
+- allow Laravel 9
+
 ## 1.1.0 - 2021-10-01
 
 - add findOrFail (#11)
