@@ -21,6 +21,39 @@ class PrefixedIdsTest extends TestCase
     }
 
     /** @test */
+    public function it_generates_prefixed_id_using_method()
+    {
+        PrefixedIds::generateUniqueIdUsing(function(){
+            return 'foo';
+        });
+
+        $testModel = TestModel::create();
+
+        $this->assertSame('test_foo', $testModel->prefixed_id);
+
+        // reset the generate using Id function
+        PrefixedIds::generateUniqueIdUsing(null);
+    }
+
+    /** @test */
+    public function it_will_generate_unique_ids_using_method()
+    {
+        PrefixedIds::generateUniqueIdUsing(function(){
+            return rand();
+        });
+
+        $testModel = TestModel::create();
+        $secondTestModel = TestModel::create();
+
+        $this->assertStringStartsWith('test_', $testModel->prefixed_id);
+        $this->assertStringStartsWith('test_', $secondTestModel->prefixed_id);
+        $this->assertNotEquals($testModel->prefixed_id, $secondTestModel->prefixed_id);
+
+        // reset the generate using Id function
+        PrefixedIds::generateUniqueIdUsing(null);
+    }
+
+    /** @test */
     public function it_can_generated_a_prefixed_it()
     {
         $testModel = TestModel::create();
