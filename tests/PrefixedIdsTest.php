@@ -23,7 +23,7 @@ class PrefixedIdsTest extends TestCase
     /** @test */
     public function it_generates_prefixed_id_using_method()
     {
-        PrefixedIds::generateUniqueIdUsing(function(){
+        PrefixedIds::generateUniqueIdUsing(function () {
             return 'foo';
         });
 
@@ -35,7 +35,7 @@ class PrefixedIdsTest extends TestCase
     /** @test */
     public function it_will_generate_unique_ids_using_method()
     {
-        PrefixedIds::generateUniqueIdUsing(function(){
+        PrefixedIds::generateUniqueIdUsing(function () {
             return rand();
         });
 

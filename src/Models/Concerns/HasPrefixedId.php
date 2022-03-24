@@ -3,7 +3,6 @@
 namespace Spatie\PrefixedIds\Models\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Spatie\PrefixedIds\Exceptions\NoPrefixConfiguredForModel;
 use Spatie\PrefixedIds\Exceptions\NoPrefixedModelFound;
 use Spatie\PrefixedIds\PrefixedIds;
