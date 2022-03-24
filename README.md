@@ -133,18 +133,6 @@ $otherModel = Spatie\PrefixedIds\PrefixedIds::find('other_model_3Fjmmfsmls'); //
 $otherModel = Spatie\PrefixedIds\PrefixedIds::findOrFail('other_model_3Fjmmfsmls'); // returns an instance of `OtherModel` or throws `NoPrefixedModelFound`
 ```
 
-### Customizing the unique ID generated
-
-You can use the function `Spatie\PrefixedIds\PrefixedIds::generateUniqueIdUsing()` to pass in a function to generate the unique ID.  By default the library will use `Str::uuid()` to generate the ID.
-
-```php
-// generate a unique Id with a set length
-Spatie\PrefixedIds\PrefixedIds::generateUniqueIdUsing(function(){
-    $length = 8;
-    return substr(md5(uniqid(mt_rand(), true)), 0, $length);
-});
-```
-
 ## Using the prefixed ids in your routes
 
 To use the prefixed ids in your routes, you'll have to add the `getRouteKeyName` method to your model. It should return the name of the attribute that holds the prefixed id.

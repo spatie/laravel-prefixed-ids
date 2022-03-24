@@ -10,7 +10,7 @@ class PrefixedIds
 {
     public static array $registeredModels = [];
 
-    public static ?object $generateUsing = null;
+    public static null|object $uniqueId = null;
 
     public static function registerModels(array $registerModels): void
     {
@@ -67,15 +67,15 @@ class PrefixedIds
 
     public static function getUniqueId(): string
     {
-        if(!static::$generateUsing){
+        if(!static::$uniqueId){
             return str_replace('-', '', Str::uuid());
         }
 
-        return call_user_func(static::$generateUsing);
+        return call_user_func(static::$uniqueId);
     }
 
     public static function generateUniqueIdUsing(?callable $generateUsing): void
     { 
-        static::$generateUsing = $generateUsing;
+        static::$uniqueId = $generateUsing;
     }
 }
