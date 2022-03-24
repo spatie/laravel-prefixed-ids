@@ -30,9 +30,6 @@ class PrefixedIdsTest extends TestCase
         $testModel = TestModel::create();
 
         $this->assertSame('test_foo', $testModel->prefixed_id);
-
-        // reset the generate using Id function
-        PrefixedIds::generateUniqueIdUsing(null);
     }
 
     /** @test */
@@ -48,9 +45,6 @@ class PrefixedIdsTest extends TestCase
         $this->assertStringStartsWith('test_', $testModel->prefixed_id);
         $this->assertStringStartsWith('test_', $secondTestModel->prefixed_id);
         $this->assertNotEquals($testModel->prefixed_id, $secondTestModel->prefixed_id);
-
-        // reset the generate using Id function
-        PrefixedIds::generateUniqueIdUsing(null);
     }
 
     /** @test */
