@@ -2,8 +2,8 @@
 
 namespace Spatie\PrefixedIds;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Spatie\PrefixedIds\Exceptions\NoPrefixedModelFound;
 
 class PrefixedIds
@@ -67,7 +67,7 @@ class PrefixedIds
 
     public static function getUniqueId(): string
     {
-        if(!static::$generateUsing){
+        if (! static::$generateUsing) {
             return str_replace('-', '', Str::uuid());
         }
 
@@ -75,7 +75,7 @@ class PrefixedIds
     }
 
     public static function generateUniqueIdUsing(?callable $generateUsing): void
-    { 
+    {
         static::$generateUsing = $generateUsing;
     }
 }
