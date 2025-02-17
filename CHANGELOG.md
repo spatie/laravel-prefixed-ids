@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-prefixed-ids` will be documented in this file.
 
+## 1.4.1 - 2025-02-17
+
+### What's Changed
+
+* Laravel 12.x Compatibility by @laravel-shift in https://github.com/spatie/laravel-prefixed-ids/pull/21
+
+**Full Changelog**: https://github.com/spatie/laravel-prefixed-ids/compare/1.4.0...1.4.1
+
 ## 1.4.0 - 2024-03-06
 
 ### What's Changed
