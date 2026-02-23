@@ -3,10 +3,10 @@
 namespace Spatie\PrefixedIds\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Ignition\Contracts\BaseSolution;
 use Spatie\Ignition\Contracts\ProvidesSolution;
 use Spatie\Ignition\Contracts\Solution;
-use Illuminate\Database\Eloquent\Model;
 
 class NoPrefixConfiguredForModel extends Exception implements ProvidesSolution
 {
