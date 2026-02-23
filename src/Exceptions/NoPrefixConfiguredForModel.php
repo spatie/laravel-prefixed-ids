@@ -3,9 +3,9 @@
 namespace Spatie\PrefixedIds\Exceptions;
 
 use Exception;
-use Facade\IgnitionContracts\BaseSolution;
-use Facade\IgnitionContracts\ProvidesSolution;
-use Facade\IgnitionContracts\Solution;
+use Spatie\Ignition\Contracts\BaseSolution;
+use Spatie\Ignition\Contracts\ProvidesSolution;
+use Spatie\Ignition\Contracts\Solution;
 use Illuminate\Database\Eloquent\Model;
 
 class NoPrefixConfiguredForModel extends Exception implements ProvidesSolution
