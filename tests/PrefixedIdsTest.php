@@ -20,8 +20,7 @@ class PrefixedIdsTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_generates_prefixed_id_using_method()
+    public function test_it_generates_prefixed_id_using_method()
     {
         PrefixedIds::generateUniqueIdUsing(function () {
             return 'foo';
@@ -32,8 +31,7 @@ class PrefixedIdsTest extends TestCase
         $this->assertSame('test_foo', $testModel->prefixed_id);
     }
 
-    /** @test */
-    public function it_will_generate_unique_ids_using_method()
+    public function test_it_will_generate_unique_ids_using_method()
     {
         PrefixedIds::generateUniqueIdUsing(function () {
             return rand();
@@ -47,16 +45,14 @@ class PrefixedIdsTest extends TestCase
         $this->assertNotEquals($testModel->prefixed_id, $secondTestModel->prefixed_id);
     }
 
-    /** @test */
-    public function it_can_generated_a_prefixed_it()
+    public function test_it_can_generate_a_prefixed_id()
     {
         $testModel = TestModel::create();
 
         $this->assertStringStartsWith('test_', $testModel->prefixed_id);
     }
 
-    /** @test */
-    public function it_will_generate_unique_ids()
+    public function test_it_will_generate_unique_ids()
     {
         $testModel = TestModel::create();
         $secondTestModel = TestModel::create();
@@ -66,8 +62,7 @@ class PrefixedIdsTest extends TestCase
         $this->assertNotEquals($testModel->prefixed_id, $secondTestModel->prefixed_id);
     }
 
-    /** @test */
-    public function a_model_can_find_a_record_with_the_given_prefixed_id()
+    public function test_a_model_can_find_a_record_with_the_given_prefixed_id()
     {
         $testModel = TestModel::create();
 
@@ -79,8 +74,7 @@ class PrefixedIdsTest extends TestCase
         $this->assertNull($foundModel);
     }
 
-    /** @test */
-    public function it_will_throw_an_exception_if_the_model_is_not_configured()
+    public function test_it_will_throw_an_exception_if_the_model_is_not_configured()
     {
         PrefixedIds::clearRegisteredModels();
 
@@ -89,8 +83,7 @@ class PrefixedIdsTest extends TestCase
         TestModel::create();
     }
 
-    /** @test */
-    public function it_can_find_the_right_model_for_the_given_prefixed_id()
+    public function test_it_can_find_the_right_model_for_the_given_prefixed_id()
     {
         $testModel = TestModel::create();
         $otherTestModel = OtherTestModel::create();
@@ -107,8 +100,7 @@ class PrefixedIdsTest extends TestCase
         $this->assertNull($nonExistingModel);
     }
 
-    /** @test */
-    public function a_model_can_find_or_fail_a_record_with_the_given_prefixed_id()
+    public function test_a_model_can_find_or_fail_a_record_with_the_given_prefixed_id()
     {
         $testModel = TestModel::create();
 
@@ -116,16 +108,14 @@ class PrefixedIdsTest extends TestCase
         $this->assertEquals($testModel->id, $foundModel->id);
     }
 
-    /** @test */
-    public function it_throws_exception_on_invalid_prefixed_id()
+    public function test_it_throws_exception_on_invalid_prefixed_id()
     {
         $this->expectException(NoPrefixedModelFound::class);
 
         TestModel::findByPrefixedIdOrFail('non_existing');
     }
 
-    // /** @test */
-    public function it_can_find_or_fail_the_right_model_for_the_given_prefixed_id()
+    public function test_it_can_find_or_fail_the_right_model_for_the_given_prefixed_id()
     {
         $testModel = TestModel::create();
         $otherTestModel = OtherTestModel::create();
@@ -139,8 +129,7 @@ class PrefixedIdsTest extends TestCase
         $this->assertEquals($testModel->id, $otherFoundModel->id);
     }
 
-    // /** @test */
-    public function it_throws_exception_on_invalid_given_model_prefixed_id()
+    public function test_it_throws_exception_on_invalid_given_model_prefixed_id()
     {
         $this->expectException(NoPrefixedModelFound::class);
 

@@ -11,11 +11,19 @@ trait HasPrefixedId
 {
     public static function bootHasPrefixedId()
     {
-        static::creating(function (Model $model) {
-            $attributeName = config('prefixed-ids.prefixed_id_attribute_name');
+        $registerCreatingEvent = function () {
+            static::creating(function (Model $model) {
+                $attributeName = config('prefixed-ids.prefixed_id_attribute_name');
 
-            $model->{$attributeName} = $model->generatePrefixedId();
-        });
+                $model->{$attributeName} = $model->generatePrefixedId();
+            });
+        };
+
+        if (method_exists(static::class, 'whenBooted')) {
+            static::whenBooted($registerCreatingEvent);
+        } else {
+            $registerCreatingEvent();
+        }
     }
 
     public function getPrefixedIdAttribute(): ?string
