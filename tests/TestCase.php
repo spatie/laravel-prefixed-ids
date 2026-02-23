@@ -15,8 +15,6 @@ class TestCase extends Orchestra
         parent::setUp();
 
         PrefixedIds::generateUniqueIdUsing(null);
-
-        ray()->newScreen($this->name());
     }
 
     public function getEnvironmentSetUp($app)
