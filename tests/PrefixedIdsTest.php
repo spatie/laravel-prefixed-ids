@@ -1,138 +1,113 @@
 <?php
 
-namespace Spatie\PrefixedIds\Tests;
-
 use Spatie\PrefixedIds\Exceptions\NoPrefixConfiguredForModel;
 use Spatie\PrefixedIds\Exceptions\NoPrefixedModelFound;
 use Spatie\PrefixedIds\PrefixedIds;
 use Spatie\PrefixedIds\Tests\TestClasses\Models\OtherTestModel;
 use Spatie\PrefixedIds\Tests\TestClasses\Models\TestModel;
 
-class PrefixedIdsTest extends TestCase
-{
-    public function setUp(): void
-    {
-        parent::setUp();
+beforeEach(function () {
+    PrefixedIds::registerModels([
+        'test_' => TestModel::class,
+        'other_test_' => OtherTestModel::class,
+    ]);
+});
 
-        PrefixedIds::registerModels([
-            'test_' => TestModel::class,
-            'other_test_' => OtherTestModel::class,
-        ]);
-    }
+it('generates prefixed id using method', function () {
+    PrefixedIds::generateUniqueIdUsing(function () {
+        return 'foo';
+    });
 
-    public function test_it_generates_prefixed_id_using_method()
-    {
-        PrefixedIds::generateUniqueIdUsing(function () {
-            return 'foo';
-        });
+    $testModel = TestModel::create();
 
-        $testModel = TestModel::create();
+    expect($testModel->prefixed_id)->toBe('test_foo');
+});
 
-        $this->assertSame('test_foo', $testModel->prefixed_id);
-    }
+it('will generate unique ids using method', function () {
+    PrefixedIds::generateUniqueIdUsing(function () {
+        return rand();
+    });
 
-    public function test_it_will_generate_unique_ids_using_method()
-    {
-        PrefixedIds::generateUniqueIdUsing(function () {
-            return rand();
-        });
+    $testModel = TestModel::create();
+    $secondTestModel = TestModel::create();
 
-        $testModel = TestModel::create();
-        $secondTestModel = TestModel::create();
+    expect($testModel->prefixed_id)->toStartWith('test_')
+        ->and($secondTestModel->prefixed_id)->toStartWith('test_')
+        ->and($testModel->prefixed_id)->not->toBe($secondTestModel->prefixed_id);
+});
 
-        $this->assertStringStartsWith('test_', $testModel->prefixed_id);
-        $this->assertStringStartsWith('test_', $secondTestModel->prefixed_id);
-        $this->assertNotEquals($testModel->prefixed_id, $secondTestModel->prefixed_id);
-    }
+it('can generate a prefixed id', function () {
+    $testModel = TestModel::create();
 
-    public function test_it_can_generated_a_prefixed_it()
-    {
-        $testModel = TestModel::create();
+    expect($testModel->prefixed_id)->toStartWith('test_');
+});
 
-        $this->assertStringStartsWith('test_', $testModel->prefixed_id);
-    }
+it('will generate unique ids', function () {
+    $testModel = TestModel::create();
+    $secondTestModel = TestModel::create();
 
-    public function test_it_will_generate_unique_ids()
-    {
-        $testModel = TestModel::create();
-        $secondTestModel = TestModel::create();
+    expect($testModel->prefixed_id)->toStartWith('test_')
+        ->and($secondTestModel->prefixed_id)->toStartWith('test_')
+        ->and($testModel->prefixed_id)->not->toBe($secondTestModel->prefixed_id);
+});
 
-        $this->assertStringStartsWith('test_', $testModel->prefixed_id);
-        $this->assertStringStartsWith('test_', $secondTestModel->prefixed_id);
-        $this->assertNotEquals($testModel->prefixed_id, $secondTestModel->prefixed_id);
-    }
+it('can find a record with the given prefixed id', function () {
+    $testModel = TestModel::create();
 
-    public function test_a_model_can_find_a_record_with_the_given_prefixed_id()
-    {
-        $testModel = TestModel::create();
+    $foundModel = TestModel::findByPrefixedId($testModel->prefixed_id);
 
-        $foundModel = TestModel::findByPrefixedId($testModel->prefixed_id);
+    expect($foundModel->id)->toBe($testModel->id);
 
-        $this->assertEquals($testModel->id, $foundModel->id);
+    $foundModel = TestModel::findByPrefixedId('non_existing');
+    expect($foundModel)->toBeNull();
+});
 
-        $foundModel = TestModel::findByPrefixedId('non_existing');
-        $this->assertNull($foundModel);
-    }
+it('will throw an exception if the model is not configured', function () {
+    PrefixedIds::clearRegisteredModels();
 
-    public function test_it_will_throw_an_exception_if_the_model_is_not_configured()
-    {
-        PrefixedIds::clearRegisteredModels();
+    TestModel::create();
+})->throws(NoPrefixConfiguredForModel::class);
 
-        $this->expectException(NoPrefixConfiguredForModel::class);
+it('can find the right model for the given prefixed id', function () {
+    $testModel = TestModel::create();
+    $otherTestModel = OtherTestModel::create();
 
-        TestModel::create();
-    }
+    $foundModel = PrefixedIds::find($testModel->prefixed_id);
+    expect($foundModel)->toBeInstanceOf(TestModel::class)
+        ->and($foundModel->id)->toBe($testModel->id);
 
-    public function test_it_can_find_the_right_model_for_the_given_prefixed_id()
-    {
-        $testModel = TestModel::create();
-        $otherTestModel = OtherTestModel::create();
+    $otherFoundModel = PrefixedIds::find($otherTestModel->prefixed_id);
+    expect($otherFoundModel)->toBeInstanceOf(OtherTestModel::class)
+        ->and($otherFoundModel->id)->toBe($testModel->id);
 
-        $foundModel = PrefixedIds::find($testModel->prefixed_id);
-        $this->assertInstanceOf(TestModel::class, $foundModel);
-        $this->assertEquals($testModel->id, $foundModel->id);
+    $nonExistingModel = PrefixedIds::find('non-existing-id');
+    expect($nonExistingModel)->toBeNull();
+});
 
-        $otherFoundModel = PrefixedIds::find($otherTestModel->prefixed_id);
-        $this->assertInstanceOf(OtherTestModel::class, $otherFoundModel);
-        $this->assertEquals($testModel->id, $otherFoundModel->id);
+it('can find or fail a record with the given prefixed id', function () {
+    $testModel = TestModel::create();
 
-        $nonExistingModel = PrefixedIds::find('non-existing-id');
-        $this->assertNull($nonExistingModel);
-    }
+    $foundModel = TestModel::findByPrefixedIdOrFail($testModel->prefixed_id);
+    expect($foundModel->id)->toBe($testModel->id);
+});
 
-    public function test_a_model_can_find_or_fail_a_record_with_the_given_prefixed_id()
-    {
-        $testModel = TestModel::create();
+it('throws exception on invalid prefixed id', function () {
+    TestModel::findByPrefixedIdOrFail('non_existing');
+})->throws(NoPrefixedModelFound::class);
 
-        $foundModel = TestModel::findByPrefixedIdOrFail($testModel->prefixed_id);
-        $this->assertEquals($testModel->id, $foundModel->id);
-    }
+it('can find or fail the right model for the given prefixed id', function () {
+    $testModel = TestModel::create();
+    $otherTestModel = OtherTestModel::create();
 
-    public function test_it_throws_exception_on_invalid_prefixed_id()
-    {
-        $this->expectException(NoPrefixedModelFound::class);
+    $foundModel = PrefixedIds::findOrFail($testModel->prefixed_id);
+    expect($foundModel)->toBeInstanceOf(TestModel::class)
+        ->and($foundModel->id)->toBe($testModel->id);
 
-        TestModel::findByPrefixedIdOrFail('non_existing');
-    }
+    $otherFoundModel = PrefixedIds::findOrFail($otherTestModel->prefixed_id);
+    expect($otherFoundModel)->toBeInstanceOf(OtherTestModel::class)
+        ->and($otherFoundModel->id)->toBe($testModel->id);
+});
 
-    public function test_it_can_find_or_fail_the_right_model_for_the_given_prefixed_id()
-    {
-        $testModel = TestModel::create();
-        $otherTestModel = OtherTestModel::create();
-
-        $foundModel = PrefixedIds::findOrFail($testModel->prefixed_id);
-        $this->assertInstanceOf(TestModel::class, $foundModel);
-        $this->assertEquals($testModel->id, $foundModel->id);
-
-        $otherFoundModel = PrefixedIds::findOrFail($otherTestModel->prefixed_id);
-        $this->assertInstanceOf(OtherTestModel::class, $otherFoundModel);
-        $this->assertEquals($testModel->id, $otherFoundModel->id);
-    }
-
-    public function test_it_throws_exception_on_invalid_given_model_prefixed_id()
-    {
-        $this->expectException(NoPrefixedModelFound::class);
-
-        PrefixedIds::findOrFail('non-existing-id');
-    }
-}
+it('throws exception on invalid given model prefixed id', function () {
+    PrefixedIds::findOrFail('non-existing-id');
+})->throws(NoPrefixedModelFound::class);
