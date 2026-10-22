@@ -26,7 +26,7 @@ $user = PrefixedIds::getModelClass('user_fj39fj3lsmxlsl') // returns the right m
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-prefixed-ids.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-prefixed-ids)
+[<img src="https://spatie.be/github-ad-image/laravel-prefixed-ids.jpg" width="419px" />](https://spatie.be/github-ad-click/laravel-prefixed-ids)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
