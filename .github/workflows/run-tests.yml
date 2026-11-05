@@ -23,9 +23,6 @@ jobs:
           - php: '8.5'
             laravel: 12.*
             pest: ~4.7.8
-          - php: '8.6'
-            laravel: 12.*
-            pest: ~4.7.8
           - php: '8.5'
             laravel: 13.*
             pest: ~5.3.5
@@ -35,6 +32,9 @@ jobs:
         exclude:
           - laravel: 13.*
             php: '8.2'
+          # Testbench 10 rejects PHPUnit 13; Pest 4's ParaTest rejects PHP 8.6.
+          - laravel: 12.*
+            php: '8.6'
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
