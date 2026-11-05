@@ -21,9 +21,17 @@ jobs:
           - laravel: 13.*
             testbench: 11.*
           - php: '8.5'
-            pest: ^5.3.5
+            laravel: 12.*
+            pest: ~4.7.8
           - php: '8.6'
-            pest: ^5.3.5
+            laravel: 12.*
+            pest: ~4.7.8
+          - php: '8.5'
+            laravel: 13.*
+            pest: ~5.3.5
+          - php: '8.6'
+            laravel: 13.*
+            pest: ~5.3.5
         exclude:
           - laravel: 13.*
             php: '8.2'
@@ -48,7 +56,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require --dev "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "pestphp/pest:${{ matrix.pest || '^3.0' }}" --no-interaction --no-update
+          composer require --dev "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "pestphp/pest:${{ matrix.pest || '3.*' }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
