@@ -12,19 +12,29 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        php: ['8.2', '8.3', '8.4', '8.5']
-        laravel: ['11.*', '12.*', '13.*']
+        php: ['8.2', '8.3', '8.4', '8.5', '8.6']
+        laravel: ['12.*', '13.*']
         stability: [prefer-lowest, prefer-stable]
         include:
-          - laravel: 11.*
-            testbench: 9.*
           - laravel: 12.*
             testbench: 10.*
           - laravel: 13.*
             testbench: 11.*
+          - php: '8.5'
+            laravel: 12.*
+            pest: ~4.7.8
+          - php: '8.5'
+            laravel: 13.*
+            pest: ~5.3.5
+          - php: '8.6'
+            laravel: 13.*
+            pest: ~5.3.5
         exclude:
           - laravel: 13.*
             php: '8.2'
+          # Testbench 10 rejects PHPUnit 13; Pest 4's ParaTest rejects PHP 8.6.
+          - laravel: 12.*
+            php: '8.6'
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
@@ -46,7 +56,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer require --dev "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" "pestphp/pest:${{ matrix.pest || '3.*' }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
